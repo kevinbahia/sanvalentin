@@ -3,9 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#7b6cff">
-
 <title>Para Ti 💌</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -15,23 +12,23 @@
   box-sizing:border-box;
   margin:0;
   padding:0;
-  font-family:'Poppins', Arial, sans-serif;
 }
 
 body{
-  min-height:100vh;
+  font-family:'Poppins', sans-serif;
   background:radial-gradient(circle at top,#1b0033,#05000f);
-  overflow-x:hidden;
   color:white;
+  overflow-x:hidden;
 }
 
 /* ❤️ Corazones */
 .heart{
-  position:absolute;
+  position:fixed;
   bottom:-40px;
   animation:float 8s linear infinite;
   opacity:.8;
   pointer-events:none;
+  z-index:0;
 }
 
 @keyframes float{
@@ -39,19 +36,21 @@ body{
   100%{transform:translateY(-120vh) scale(1.4); opacity:0;}
 }
 
-/* 📦 Contenedor */
-.container{
+/* 📦 Contenedor general */
+.section{
   min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  text-align:center;
-  padding:20px;
+  padding:40px 20px;
+  position:relative;
+  z-index:1;
 }
 
-/* 💎 Texto neón adaptable */
+/* 💎 Título */
 .neon{
-  font-size:clamp(1.6rem, 4vw, 3rem);
+  font-size:clamp(1.8rem,5vw,3rem);
+  text-align:center;
   background:linear-gradient(90deg,#ff4ecd,#7b6cff,#00f5ff,#ff4ecd);
   background-size:300%;
   -webkit-background-clip:text;
@@ -65,21 +64,21 @@ body{
 
 /* Botones */
 .buttons{
-  margin-top:30px;
+  margin-top:40px;
   display:flex;
-  flex-wrap:wrap;
+  gap:20px;
   justify-content:center;
-  gap:15px;
+  flex-wrap:wrap;
 }
 
 button{
   border:none;
-  padding:clamp(10px,2vw,16px) clamp(20px,4vw,35px);
-  font-size:clamp(0.9rem,2vw,1.2rem);
+  padding:14px 32px;
+  font-size:1rem;
   border-radius:14px;
   cursor:pointer;
   color:white;
-  transition:all .3s ease;
+  transition:.3s;
 }
 
 #yes{
@@ -87,7 +86,7 @@ button{
 }
 
 #yes:hover{
-  transform:scale(1.05);
+  transform:scale(1.08);
 }
 
 #no{
@@ -96,7 +95,15 @@ button{
 }
 
 /* 💌 CARTA */
-#letter{ display:none; width:100%; }
+#letter{
+  display:none;
+  padding:60px 20px;
+}
+
+.letter-wrapper{
+  max-width:900px;
+  margin:auto;
+}
 
 .letter-paper{
   background:
@@ -106,94 +113,81 @@ button{
     radial-gradient(circle at bottom right,#3a2d1c 0%,transparent 40%),
     linear-gradient(#fffaf0,#f3e9dc);
   color:#2b1d0e;
-  max-width:900px;
-  width:100%;
-  padding:clamp(20px,4vw,50px);
-  box-shadow:0 20px 45px rgba(0,0,0,.45);
-  text-align:left;
+  padding:clamp(25px,5vw,60px);
   border-radius:12px;
-  margin:auto;
+  box-shadow:0 20px 45px rgba(0,0,0,.4);
 }
 
-/* 📸 Foto adaptable */
+/* Imagen */
 .pig{
-  width:clamp(120px,25vw,180px);
-  height:clamp(120px,25vw,180px);
+  width:160px;
+  height:160px;
   background:url("imagenes/img.jpeg") center/cover no-repeat;
-  float:right;
-  margin-left:25px;
   border-radius:6px;
   transform:rotate(-4deg);
-  box-shadow:0 10px 25px rgba(0,0,0,.4),
-             inset 0 0 25px rgba(120,70,20,.45);
+  box-shadow:0 10px 25px rgba(0,0,0,.4);
+  margin-bottom:25px;
 }
 
-/* ✍️ Texto */
-.letter-title,
-.letter-text{
-  font-family:'Kalam', sans-serif;
-}
-
+/* Texto carta */
 .letter-title{
-  font-size:clamp(1.2rem,3vw,1.8rem);
+  font-family:'Kalam', sans-serif;
+  font-size:1.7rem;
   margin-bottom:20px;
 }
 
 .letter-text{
-  font-size:clamp(1rem,2.5vw,1.3rem);
-  line-height:1.9;
+  font-family:'Kalam', sans-serif;
+  font-size:1.25rem;
+  line-height:2;
   white-space:pre-wrap;
 }
 
-/* 📱 Ajustes móviles */
-@media(max-width:768px){
+/* Responsive real */
+@media (min-width:768px){
+  .letter-content{
+    display:flex;
+    gap:30px;
+  }
+
   .pig{
-    float:none;
-    margin:0 auto 20px;
-    display:block;
-  }
-
-  .letter-paper{
-    text-align:center;
-  }
-
-  .letter-text{
-    text-align:left;
+    flex-shrink:0;
   }
 }
 
-@media(max-width:380px){
-  .buttons{
-    flex-direction:column;
-  }
-}
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
-  <div id="question">
+<!-- PREGUNTA -->
+<section id="question" class="section">
+  <div>
     <h1 class="neon">¿Quieres ser mi Valentine Day? 💜</h1>
     <div class="buttons">
       <button id="yes">Sí 💕</button>
       <button id="no">No 😳</button>
     </div>
   </div>
+</section>
 
-  <div id="letter">
+<!-- CARTA -->
+<section id="letter">
+  <div class="letter-wrapper">
     <div class="letter-paper">
-      <div class="pig"></div>
-      <div class="letter-title">Para ti, Corazón</div>
-      <div id="typedText" class="letter-text"></div>
+      <div class="letter-content">
+        <div class="pig"></div>
+        <div>
+          <div class="letter-title">Para ti, Corazón</div>
+          <div id="typedText" class="letter-text"></div>
+        </div>
+      </div>
     </div>
   </div>
-
-</div>
+</section>
 
 <script>
-// ❤️ corazones flotando
+// ❤️ corazones
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="heart";
@@ -204,7 +198,7 @@ setInterval(()=>{
   setTimeout(()=>h.remove(),10000);
 },500);
 
-// ✍️ Texto letra por letra
+// ✍️ Texto
 const text = `Gracias por estar conmigo y por aguantarme tal como soy.
 
 Perdón por mis errores y por las veces que no hago las cosas bien.
@@ -226,7 +220,6 @@ function type(){
   }
 }
 
-// BOTONES
 const yes = document.getElementById("yes");
 const no = document.getElementById("no");
 const question = document.getElementById("question");
@@ -235,22 +228,14 @@ const letter = document.getElementById("letter");
 yes.onclick=()=>{
   question.style.display="none";
   letter.style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
   type();
 };
 
-// ❌ Botón imposible
 no.addEventListener("mouseenter",()=>{
   no.style.transform =
     `translate(${Math.random()*200-100}px,${Math.random()*120-60}px)`;
 });
-</script>
-
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-    .then(() => console.log("Service Worker registrado 💜"))
-    .catch(err => console.log("Error:", err));
-}
 </script>
 
 </body>
