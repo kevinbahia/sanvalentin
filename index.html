@@ -8,19 +8,20 @@
 
 <title>Para Ti 💌</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 *{
   box-sizing:border-box;
+  margin:0;
+  padding:0;
   font-family:'Poppins', Arial, sans-serif;
 }
 
 body{
-  margin:0;
   min-height:100vh;
   background:radial-gradient(circle at top,#1b0033,#05000f);
-  overflow:hidden;
+  overflow-x:hidden;
   color:white;
 }
 
@@ -30,6 +31,7 @@ body{
   bottom:-40px;
   animation:float 8s linear infinite;
   opacity:.8;
+  pointer-events:none;
 }
 
 @keyframes float{
@@ -47,9 +49,9 @@ body{
   padding:20px;
 }
 
-/* 💎 Texto neón */
+/* 💎 Texto neón adaptable */
 .neon{
-  font-size:2.8rem;
+  font-size:clamp(1.6rem, 4vw, 3rem);
   background:linear-gradient(90deg,#ff4ecd,#7b6cff,#00f5ff,#ff4ecd);
   background-size:300%;
   -webkit-background-clip:text;
@@ -65,21 +67,27 @@ body{
 .buttons{
   margin-top:30px;
   display:flex;
+  flex-wrap:wrap;
   justify-content:center;
-  gap:20px;
+  gap:15px;
 }
 
 button{
   border:none;
-  padding:14px 30px;
-  font-size:1.2rem;
+  padding:clamp(10px,2vw,16px) clamp(20px,4vw,35px);
+  font-size:clamp(0.9rem,2vw,1.2rem);
   border-radius:14px;
   cursor:pointer;
   color:white;
+  transition:all .3s ease;
 }
 
 #yes{
   background:linear-gradient(135deg,#ff4ecd,#7b6cff);
+}
+
+#yes:hover{
+  transform:scale(1.05);
 }
 
 #no{
@@ -88,7 +96,7 @@ button{
 }
 
 /* 💌 CARTA */
-#letter{ display:none; }
+#letter{ display:none; width:100%; }
 
 .letter-paper{
   background:
@@ -100,15 +108,17 @@ button{
   color:#2b1d0e;
   max-width:900px;
   width:100%;
-  padding:40px 50px;
+  padding:clamp(20px,4vw,50px);
   box-shadow:0 20px 45px rgba(0,0,0,.45);
   text-align:left;
+  border-radius:12px;
+  margin:auto;
 }
 
-/* 📸 Foto */
+/* 📸 Foto adaptable */
 .pig{
-  width:180px;
-  height:180px;
+  width:clamp(120px,25vw,180px);
+  height:clamp(120px,25vw,180px);
   background:url("imagenes/img.jpeg") center/cover no-repeat;
   float:right;
   margin-left:25px;
@@ -120,31 +130,41 @@ button{
 
 /* ✍️ Texto */
 .letter-title,
-.letter-text,
-.signature,
-.date{
+.letter-text{
   font-family:'Kalam', sans-serif;
 }
 
 .letter-title{
-  font-size:1.7rem;
-  margin-bottom:22px;
+  font-size:clamp(1.2rem,3vw,1.8rem);
+  margin-bottom:20px;
 }
 
 .letter-text{
-  font-size:1.25rem;
-  line-height:2.1;
+  font-size:clamp(1rem,2.5vw,1.3rem);
+  line-height:1.9;
   white-space:pre-wrap;
 }
 
-.signature{ font-size:1.5rem; }
-.date{ opacity:.7; }
-
+/* 📱 Ajustes móviles */
 @media(max-width:768px){
   .pig{
     float:none;
     margin:0 auto 20px;
     display:block;
+  }
+
+  .letter-paper{
+    text-align:center;
+  }
+
+  .letter-text{
+    text-align:left;
+  }
+}
+
+@media(max-width:380px){
+  .buttons{
+    flex-direction:column;
   }
 }
 </style>
@@ -173,7 +193,7 @@ button{
 </div>
 
 <script>
-// ❤️ corazones
+// ❤️ corazones flotando
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="heart";
@@ -184,7 +204,7 @@ setInterval(()=>{
   setTimeout(()=>h.remove(),10000);
 },500);
 
-// ✍️ TEXTO LETRA POR LETRA
+// ✍️ Texto letra por letra
 const text = `Gracias por estar conmigo y por aguantarme tal como soy.
 
 Perdón por mis errores y por las veces que no hago las cosas bien.
@@ -202,18 +222,23 @@ function type(){
   if(i < text.length){
     document.getElementById("typedText").innerHTML += text.charAt(i);
     i++;
-    setTimeout(type, 40); // velocidad
+    setTimeout(type, 40);
   }
 }
 
 // BOTONES
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const question = document.getElementById("question");
+const letter = document.getElementById("letter");
+
 yes.onclick=()=>{
   question.style.display="none";
   letter.style.display="block";
   type();
 };
 
-// ❌ NO IMPOSIBLE
+// ❌ Botón imposible
 no.addEventListener("mouseenter",()=>{
   no.style.transform =
     `translate(${Math.random()*200-100}px,${Math.random()*120-60}px)`;
@@ -227,7 +252,6 @@ if ("serviceWorker" in navigator) {
     .catch(err => console.log("Error:", err));
 }
 </script>
-
 
 </body>
 </html>
